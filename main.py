@@ -2,7 +2,7 @@ from prompt_toolkit.application import Application
 from prompt_toolkit.application.current import get_app
 from prompt_toolkit.key_binding import KeyBindings
 from prompt_toolkit.key_binding.bindings.focus import focus_next, focus_previous
-from prompt_toolkit.layout import Dimension, HSplit, Layout, ScrollablePane
+from prompt_toolkit.layout import Dimension, HSplit, Layout, ScrollablePane, VSplit
 from prompt_toolkit.widgets import Frame, Label, TextArea
 
 import user
@@ -15,13 +15,33 @@ repos_name = []
 for rep in repos:
     repos_name.append(Frame(TextArea(text=rep.full_name, width=Dimension())))
 
-root_container = Frame(
-        ScrollablePane(
-            HSplit(
-                repos_name
-                )
-            )
-    )
+root_container = VSplit(
+            [
+                HSplit(
+                        [
+                            Frame(title="Username",body=Label(my_user.username, width=Dimension())),
+                            Frame(title="User info",body=Label(my_user.get_info(), width=Dimension()))
+                        ],
+                        width=Dimension(min=1, max=50)
+                    ),
+
+                Frame(title="Repos",body=ScrollablePane(
+                    HSplit(
+                        repos_name
+                    )
+                ))
+
+            ]
+        )
+
+
+#root_container = Frame(
+#        ScrollablePane(
+#            HSplit(
+#                repos_name
+#                )
+#            )
+#    )
 
 layout = Layout(container=root_container)
 
