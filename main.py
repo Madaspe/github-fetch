@@ -13,7 +13,7 @@ repos = my_user.user.get_repos()
 repos_name = []
 
 for rep in repos:
-    repos_name.append(Frame(TextArea(text=rep.full_name, width=Dimension())))
+    repos_name.append(Frame(Label(text=f"{rep.full_name}\nLast update: {rep.updated_at}", width=Dimension())))
 
 root_container = VSplit(
             [
@@ -25,11 +25,11 @@ root_container = VSplit(
                         width=Dimension(min=1, max=50)
                     ),
 
-                Frame(title="Repos",body=ScrollablePane(
+                Frame(title="Repos",body=
                     HSplit(
                         repos_name
                     )
-                ))
+                )
 
             ]
         )

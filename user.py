@@ -12,10 +12,14 @@ class User:
         self.user = self.github.get_user(username)
 
     def get_info(self):
-        name = self.user.name
-        repos = self.user.public_repos
-        followers = self.user.followers
-        following = self.user.following
+        info = {}
 
-        return f"Name:{name}\nRepos:{repos}\nFollowers:{followers}\nFollowing:{following}"
-
+        info["Name"] = self.user.name
+        info["Repos"] = self.user.public_repos
+        info["Followers"] = self.user.followers
+        info["Following"] = self.user.following
+        info["Bio"] = self.user.bio
+        info["Email"] = self.user.email
+        info["Joined"] = self.user.created_at
+        
+        return '\n'.join([f"{info_item[0]}: {info_item[1]}" for info_item in info.items()])
